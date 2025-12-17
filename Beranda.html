@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRODUK - AYAM GEPREK SAMULYO</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+:root { --primary:#e65100; --text-dark:#333; }
+body { font-family:'Poppins',sans-serif; margin:0; color:var(--text-dark); background:#fff; }
+header, footer { background:var(--primary); color:#fff; }
+header h1 { font-size:2.2rem; }
+.nav-link { color:#fff !important; font-weight:500; }
+.nav-link:hover { text-decoration:underline; }
+.nav-link.active { text-decoration:underline; font-weight:600; }
+.product-img { width:100%; height:220px; object-fit:cover; border-radius:12px; cursor:pointer; }
+.card { box-shadow:0 4px 10px rgba(0,0,0,.15); }
+.user-icon { width:42px; height:42px; border-radius:50%; object-fit:cover; }
+.rating-star { color:#ffc107; font-size:1.1rem; }
+.rating-text { display:block; font-size:0.9rem; color:#555; }
+@media(max-width:576px){ header h1{font-size:1.7rem;} .product-img{height:180px;} }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="py-4 text-center">
+    <div class="container">
+        <h1 class="fw-bold">AYAM GEPREK SAMULYO</h1>
+        <p>MENYEDIAKAN BERBAGAI VARIAN AYAM GEPREK DENGAN HARGA TERJANGKAU</p>
+        <nav>
+            <ul class="nav justify-content-center flex-wrap">
+                <li class="nav-item"><a class="nav-link" href="Beranda.html">Beranda</a></li>
+                <li class="nav-item"><a class="nav-link" href="TentangKami.html">Tentang Kami</a></li>
+                <li class="nav-item"><a class="nav-link active" href="Produk.html">Produk</a></li>
+                <li class="nav-item"><a class="nav-link" href="Galeri.html">Galeri</a></li>
+                <li class="nav-item"><a class="nav-link" href="Kontak.html">Kontak</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="container my-5">
+
+<!-- RATING -->
+<section id="ratingSection">
+<h2 class="fw-bold text-center mb-4">Rating Produk Unggulan</h2>
+<div class="row g-4" id="ratingProduk"></div>
+<hr class="my-5">
+</section>
+
+<!-- KOMENTAR -->
+<section id="commentSection">
+<h2 class="fw-bold text-center mb-4">Komentar Pelanggan</h2>
+<div class="row g-4" id="komentar"></div>
+<hr class="my-5">
+</section>
+
+<!-- BEST SELLER -->
+<section id="bestSection">
+<h2 class="fw-bold text-center mb-4">Produk Best Seller</h2>
+<div class="row g-4" id="bestSeller"></div>
+<hr class="my-5">
+</section>
+
+<!-- REKOMENDASI -->
+<section id="rekomSection">
+<h2 class="fw-bold text-center mb-4">Produk Rekomendasi</h2>
+<div class="row g-4" id="rekomendasi"></div>
+<hr class="my-5">
+</section>
+
+<!-- SEMUA PRODUK -->
+<h2 class="fw-bold text-center mb-4">Semua Produk</h2>
+<div class="row g-4" id="allProducts"></div>
+<nav class="mt-4">
+<ul class="pagination justify-content-center" id="pagination"></ul>
+</nav>
+</main>
+
+<!-- FOOTER -->
+<footer class="text-center py-3">
+<p class="mb-0">&copy; 2025 AYAM GEPREK SAMULYO. SEMUA HAK DILINDUNGI.</p>
+</footer>
+
+<!-- MODAL PESAN -->
+<div class="modal fade" id="orderModal">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-body text-center">
+<img id="modalImg" class="img-fluid rounded mb-3">
+<h5 id="modalName"></h5>
+<p id="modalPrice" class="fw-bold text-danger"></p>
+<input type="number" id="qty" class="form-control mb-3" min="1" placeholder="Jumlah Pesanan">
+<button class="btn btn-warning w-100 fw-bold" onclick="submitOrder()">Pesan Sekarang</button>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+// DATA PRODUK
+const products = [
+  {id:1, name:"Ayam Geprek Original", price:15000, img:"images/produk1.jpg", best:true, rekom:true},
+  {id:2, name:"Ayam Geprek Keju", price:17000, img:"images/produk2.jpg", best:true, rekom:true},
+  {id:3, name:"Ayam Geprek Rica", price:18000, img:"images/produk3.jpg", best:true, rekom:true},
+  {id:4, name:"Ayam Geprek Sambal Matah", price:20000, img:"images/produk4.jpg", best:true, rekom:true},
+  {id:5, name:"Ayam Geprek Teriyaki", price:19000, img:"images/produk5.jpg", best:false, rekom:true},
+  {id:6, name:"Ayam Geprek Sambal Bawang", price:18500, img:"images/produk6.jpg", best:false, rekom:true},
+  {id:7, name:"Ayam Geprek Sambal Ijo", price:17500, img:"images", best:false, rekom:true},
+  {id:8, name:"Ayam Geprek Keju Pedas", price:18000, img:"images/produk8.jpg", best:false, rekom:true},
+  {id:9, name:"Ayam Geprek BBQ", price:19000, img:"images/produk9.jpg", best:false, rekom:false},
+  {id:10, name:"Ayam Geprek Balado", price:19500, img:"images/produk10.jpg", best:false, rekom:false},
+  {id:11, name:"Ayam Geprek Sambal Tomat", price:18000, img:"images/produk11.jpg", best:false, rekom:false},
+  {id:12, name:"Ayam Geprek Mentai", price:20000, img:"images/produk12.jpg", best:false, rekom:false},
+  {id:13, name:"Ayam Geprek Mozarella", price:20500, img:"images/produk13.jpg", best:false, rekom:false},
+  {id:14, name:"Ayam Geprek Lada Hitam", price:21000, img:"images/produk14.jpg", best:false, rekom:false},
+  {id:15, name:"Ayam Geprek Sambal Korek", price:19500, img:"images/produk15.jpg", best:false, rekom:false},
+  {id:16, name:"Ayam Geprek Special", price:22000, img:"images/produk16.jpg", best:false, rekom:false}
+];
+
+// RATING
+const ratingData = [
+ { ...products[0], text:"Sangat Direkomendasikan", star:5, comment:"Ayamnya empuk, sambalnya nendang." },
+ { ...products[1], text:"Direkomendasikan", star:4, comment:"Perpaduan ayam crispy dan saus enak." },
+ { ...products[2], text:"Sangat Direkomendasikan", star:5, comment:"Pedasnya mantap, bikin nagih." },
+ { ...products[3], text:"Direkomendasikan", star:4, comment:"Cocok buat makan siang." }
+];
+
+// KOMENTAR
+const comments = [
+ "Rasanya konsisten dari dulu, nggak pernah mengecewakan.",
+ "Harga ramah mahasiswa tapi rasa premium.",
+ "Porsinya pas dan sambalnya bisa request pedas.",
+ "Pelayanan cepat, pesanan datang masih hangat.",
+ "Kalau bingung mau makan apa, ini pilihan aman."
+];
+
+const perPage = 8;
+let currentPage = 1;
+let selected = {};
+
+function productCard(p){
+return `
+<div class="col-sm-6 col-md-3">
+<div class="card">
+<img src="${p.img}" class="product-img" onclick="openOrder(${p.id})">
+<div class="card-body text-center">
+<h6>${p.name}</h6>
+<p class="fw-bold text-danger">Rp ${p.price.toLocaleString()}</p>
+<button class="btn btn-warning btn-sm" onclick="openOrder(${p.id})">Pesan</button>
+</div>
+</div>
+</div>`;
+}
+
+// Render Rating
+document.getElementById("ratingProduk").innerHTML = ratingData.map(p=>`
+<div class="col-md-3">
+<div class="card p-3 text-center">
+<img src="${p.img}" class="product-img mb-2">
+<h6>${p.name}</h6>
+<p>${p.comment}</p>
+<div class="rating-star">${"★".repeat(p.star)}</div>
+<span class="rating-text">${p.text}</span>
+</div>
+</div>`).join("");
+
+// Render Comments
+document.getElementById("komentar").innerHTML = comments.map(c=>`
+<div class="col-md-4">
+<div class="card p-3 d-flex flex-row align-items-center gap-3">
+<img src="https://i.pravatar.cc/100" class="user-icon">
+<span>${c}</span>
+</div>
+</div>`).join("");
+
+// Render Best & Rekom
+document.getElementById("bestSeller").innerHTML = products.filter(p=>p.best).map(productCard).join("");
+document.getElementById("rekomendasi").innerHTML = products.filter(p=>p.rekom).map(productCard).join("");
+
+// Render Semua Produk dengan Pagination
+function renderProducts(){
+    const start = (currentPage-1)*perPage;
+    const data = products.slice(start,start+perPage);
+    document.getElementById("allProducts").innerHTML = data.map(productCard).join("");
+
+    const total = Math.ceil(products.length/perPage);
+    let pag = "";
+    if(currentPage>1) pag += `<li class="page-item"><a class="page-link" onclick="prev()">Sebelumnya</a></li>`;
+    for(let i=1;i<=total;i++)
+        pag += `<li class="page-item ${i==currentPage?'active':''}">
+        <a class="page-link" onclick="go(${i})">${i}</a></li>`;
+    if(currentPage<total) pag += `<li class="page-item"><a class="page-link" onclick="next()">Selanjutnya</a></li>`;
+    document.getElementById("pagination").innerHTML = pag;
+
+    // Tampilkan rating, komentar, best, rekom hanya di halaman 1
+    ["ratingSection","commentSection","bestSection","rekomSection"].forEach(id=>{
+        document.getElementById(id).style.display = currentPage>1?"none":"block";
+    });
+}
+
+function go(p){ currentPage=p; renderProducts(); }
+function prev(){ currentPage--; renderProducts(); }
+function next(){ currentPage++; renderProducts(); }
+
+// Modal Pesan
+function openOrder(id){
+    selected = products.find(p=>p.id===id);
+    modalImg.src = selected.img;
+    modalName.innerText = selected.name;
+    modalPrice.innerText = "Rp " + selected.price.toLocaleString();
+    new bootstrap.Modal(orderModal).show();
+}
+
+function submitOrder(){
+    const q = qty.value;
+    if(!q) return alert("Jumlah wajib diisi");
+    alert(`Pesanan berhasil!\n\nProduk: ${selected.name}\nJumlah: ${q}\nTotal: Rp ${(q*selected.price).toLocaleString()}`);
+}
+
+renderProducts();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

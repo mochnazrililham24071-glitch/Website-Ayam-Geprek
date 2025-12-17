@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KONTAK - AYAM GEPREK SAMULYO</title>
+
+<!-- BOOTSTRAP & ICONS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+:root {
+    --primary:#e65100;
+    --text-dark:#333;
+    --soft:#fff8f2;
+}
+
+body {
+    font-family:'Poppins',sans-serif;
+    margin:0;
+    color:var(--text-dark);
+    background:#fff;
+}
+
+/* HEADER & FOOTER */
+header, footer {
+    background:var(--primary);
+    color:#fff;
+    text-align:center;
+}
+
+header h1 {
+    font-size:2.2rem;
+    margin:0;
+}
+
+header p {
+    margin:0;
+}
+
+.nav-link {
+    color:#fff !important;
+    font-weight:500;
+}
+
+.nav-link:hover {
+    text-decoration:underline;
+}
+
+.nav-link.active {
+    text-decoration:underline;
+    font-weight:600;
+}
+
+/* PAGE TITLE */
+.page-title {
+    background:var(--soft);
+    padding:60px 0;
+    text-align:center;
+}
+
+/* FORM */
+.form-card {
+    max-width:1000px;
+    margin:auto;
+}
+
+@media(max-width:768px){
+    .form-card { max-width:100%; }
+}
+
+.btn-brand {
+    background:var(--primary);
+    color:#fff;
+}
+
+/* WA FLOAT */
+.wa-float {
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    width:55px;
+    height:55px;
+    background:#25D366;
+    color:#fff;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:26px;
+    box-shadow:0 4px 10px rgba(0,0,0,.3);
+    z-index:999;
+    text-decoration:none;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER MIRIP PRODUK.HTML -->
+<header class="py-4">
+    <div class="container">
+        <h1 class="fw-bold">AYAM GEPREK SAMULYO</h1>
+        <p>MENYEDIAKAN BERBAGAI VARIAN AYAM GEPREK DENGAN HARGA TERJANGKAU</p>
+        <nav>
+            <ul class="nav justify-content-center flex-wrap mt-3">
+                <li class="nav-item"><a class="nav-link" href="Beranda.html">Beranda</a></li>
+                <li class="nav-item"><a class="nav-link" href="TentangKami.html">Tentang Kami</a></li>
+                <li class="nav-item"><a class="nav-link" href="Produk.html">Produk</a></li>
+                <li class="nav-item"><a class="nav-link" href="Galeri.html">Galeri</a></li>
+                <li class="nav-item"><a class="nav-link active" href="Kontak.html">Kontak</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- PAGE TITLE -->
+<section class="page-title">
+<div class="container">
+    <h2 class="fw-bold">Hubungi Kami</h2>
+    <p>Silakan isi formulir di bawah untuk menghubungi kami</p>
+</div>
+</section>
+
+<main class="container my-5">
+<!-- FORM -->
+<div class="card shadow form-card mb-5">
+<div class="card-body p-4 p-md-5">
+<h4 class="text-center mb-4">Formulir Kontak</h4>
+
+<div id="successMsg" class="alert alert-success d-none">
+Pesan berhasil dikirim.
+</div>
+
+<form id="kontakForm">
+<div class="mb-3">
+<label class="form-label">Nama Lengkap</label>
+<input type="text" id="nama" class="form-control">
+<small id="errorNama" class="text-danger"></small>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Email</label>
+<input type="email" id="email" class="form-control">
+<small id="errorEmail" class="text-danger"></small>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Nomor HP</label>
+<input type="text" id="hp" class="form-control">
+<small id="errorHp" class="text-danger"></small>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Pesan</label>
+<textarea id="pesan" rows="4" class="form-control" placeholder="Tulis pesan Anda di sini..."></textarea>
+<small id="errorPesan" class="text-danger"></small>
+</div>
+
+<div class="mb-3 form-check">
+<input type="checkbox" id="setuju" class="form-check-input">
+<label class="form-check-label ms-2">Saya menyetujui syarat & ketentuan</label>
+<small id="errorSetuju" class="text-danger d-block"></small>
+</div>
+
+<div class="text-center mt-4">
+<button class="btn btn-brand px-4" type="submit">Kirim</button>
+<button class="btn btn-secondary px-4 ms-2" type="reset">Clear Data</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- WISHLIST + PREVIEW -->
+<div class="card shadow form-card p-4 mb-5">
+<h5 class="fw-bold">Wishlist Produk</h5>
+<input type="text" id="produkInput" class="form-control" placeholder="Nama produk...">
+<p class="mt-2">Preview: <span id="previewProduk" class="fw-semibold"></span></p>
+<button id="tambahBtn" class="btn btn-brand btn-sm">Tambah</button>
+<ul id="daftarProduk" class="list-group mt-3"></ul>
+</div>
+
+<!-- MENU TAMPILAN -->
+<div class="text-center mb-5">
+<label class="fw-bold">Menu Tampilan (Tema)</label>
+<select id="temaSelect" class="form-select mx-auto" style="max-width:300px">
+<option value="#ffffff">Putih</option>
+<option value="#fff8f2">Krem</option>
+<option value="#f1f8ff">Biru Muda</option>
+</select>
+</div>
+</main>
+
+<!-- FOOTER MIRIP PRODUK.HTML -->
+<footer class="py-4">
+<p class="mb-0">&copy; 2025 AYAM GEPREK SAMULYO. SEMUA HAK DILINDUNGI.</p>
+</footer>
+
+<!-- WA FLOAT -->
+<a href="https://wa.me/6281234567890" class="wa-float" target="_blank">
+<i class="bi bi-whatsapp"></i>
+</a>
+
+<script>
+/* VALIDASI FORM */
+const kontakForm = document.getElementById("kontakForm");
+const nama = document.getElementById("nama");
+const email = document.getElementById("email");
+const hp = document.getElementById("hp");
+const pesan = document.getElementById("pesan");
+const setuju = document.getElementById("setuju");
+const successMsg = document.getElementById("successMsg");
+
+const errorNama = document.getElementById("errorNama");
+const errorEmail = document.getElementById("errorEmail");
+const errorHp = document.getElementById("errorHp");
+const errorPesan = document.getElementById("errorPesan");
+const errorSetuju = document.getElementById("errorSetuju");
+
+kontakForm.addEventListener("submit",e=>{
+e.preventDefault();
+let valid=true;
+
+if(nama.value.length<3){errorNama.textContent="Nama minimal 3 karakter"; valid=false;}else errorNama.textContent="";
+if(!email.value.includes("@")){errorEmail.textContent="Email tidak valid"; valid=false;}else errorEmail.textContent="";
+if(!/^[0-9]+$/.test(hp.value)){errorHp.textContent="Nomor HP harus angka"; valid=false;}else errorHp.textContent="";
+if(pesan.value.length<5){errorPesan.textContent="Pesan minimal 5 karakter"; valid=false;}else errorPesan.textContent="";
+if(!setuju.checked){errorSetuju.textContent="Harus disetujui"; valid=false;}else errorSetuju.textContent="";
+
+if(valid){successMsg.classList.remove("d-none"); kontakForm.reset();}
+});
+
+/* WISHLIST */
+const produkInput = document.getElementById("produkInput");
+const previewProduk = document.getElementById("previewProduk");
+const tambahBtn = document.getElementById("tambahBtn");
+const daftarProduk = document.getElementById("daftarProduk");
+
+produkInput.addEventListener("keyup",()=>{previewProduk.textContent=produkInput.value;});
+tambahBtn.onclick=e=>{
+e.preventDefault();
+if(produkInput.value){
+    const li=document.createElement("li");
+    li.textContent=produkInput.value;
+    li.className="list-group-item";
+    li.ondblclick=()=>li.remove();
+    daftarProduk.appendChild(li);
+    produkInput.value="";
+    previewProduk.textContent="";
+}
+};
+
+/* MENU TAMPILAN */
+const temaSelect = document.getElementById("temaSelect");
+temaSelect.onchange=()=>{document.body.style.backgroundColor=temaSelect.value;};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
